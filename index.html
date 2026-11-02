@@ -10,6 +10,21 @@
 :root {
   --bg: #f7f4ee;
   --card: #fffefa;
+{
+  "rules": {
+    "family-trip-checklist": {
+      "members": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      },
+      "shared-items": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+}
+
   --ink: #28332f;
   --muted: #78827b;
   --line: #e8e4da;
