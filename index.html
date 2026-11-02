@@ -257,7 +257,7 @@ footer {
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getDatabase, ref, onValue, set }
+import { getDatabase, ref, onValue, set, update }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 import { getAuth, signInAnonymously }
@@ -454,7 +454,7 @@ function updateItem(index, checked) {
 
   if (databaseRef) {
 
-    set(databaseRef, values).catch(() => {
+    update(databaseRef, { [index]: checked }).catch(() => {
       setStatus(false, "同步失敗，請重新整理");
     });
 
@@ -468,6 +468,7 @@ function updateItem(index, checked) {
   }
 
 }
+
 
 /* ==================================
    初始化 Firebase
@@ -537,22 +538,34 @@ if (configured) {
    全部重設
 ================================== */
 
+/* ==================================
+   全部重設
+================================== */
+
 document.getElementById("reset")
-.addEventListener("click", () => {
+.addEventListener("click", async () => {
 
-  if (confirm("確定取消所有勾選？這會影響所有使用者。")) {
+  if (!confirm("確定取消所有勾選？這會影響所有使用者。")) {
+    return;
+  }
 
-    values = {};
-    paint();
+  values = {};
+  paint();
+
+  try {
 
     if (databaseRef) {
-      set(databaseRef, values);
+      await set(databaseRef, null);
     } else {
       localStorage.setItem(
         "family-trip-checklist",
         JSON.stringify(values)
       );
     }
+
+  } catch (error) {
+
+    setStatus(false, "重設失敗，請檢查網路連線");
 
   }
 
