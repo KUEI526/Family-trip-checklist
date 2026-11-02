@@ -257,7 +257,7 @@ footer {
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getDatabase, ref, onValue, set, update }
+import { getDatabase, ref, onValue, set }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 import { getAuth, signInAnonymously }
@@ -269,13 +269,13 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 ================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD_qvUbk3uSX5BaTLX6gkk9W3VdhFav6Pk",
-  authDomain: "family-trip-checklist-8f08c.firebaseapp.com",
-  databaseURL: "https://family-trip-checklist-8f08c-default-rtdb.firebaseio.com",
-  projectId: "family-trip-checklist-8f08c",
-  storageBucket: "family-trip-checklist-8f08c.firebasestorage.app",
-  messagingSenderId: "487257126970",
-  appId: "1:487257126970:web:847974307db6fa886f9d03"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_DATABASE_URL",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
 /* ==================================
@@ -454,7 +454,7 @@ function updateItem(index, checked) {
 
   if (databaseRef) {
 
-    update(databaseRef, { [index]: checked }).catch(() => {
+    set(databaseRef, values).catch(() => {
       setStatus(false, "同步失敗，請重新整理");
     });
 
@@ -468,7 +468,6 @@ function updateItem(index, checked) {
   }
 
 }
-
 
 /* ==================================
    初始化 Firebase
@@ -538,34 +537,22 @@ if (configured) {
    全部重設
 ================================== */
 
-/* ==================================
-   全部重設
-================================== */
-
 document.getElementById("reset")
-.addEventListener("click", async () => {
+.addEventListener("click", () => {
 
-  if (!confirm("確定取消所有勾選？這會影響所有使用者。")) {
-    return;
-  }
+  if (confirm("確定取消所有勾選？這會影響所有使用者。")) {
 
-  values = {};
-  paint();
-
-  try {
+    values = {};
+    paint();
 
     if (databaseRef) {
-      await set(databaseRef, null);
+      set(databaseRef, values);
     } else {
       localStorage.setItem(
         "family-trip-checklist",
         JSON.stringify(values)
       );
     }
-
-  } catch (error) {
-
-    setStatus(false, "重設失敗，請檢查網路連線");
 
   }
 
