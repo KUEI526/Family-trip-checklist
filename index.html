@@ -14,99 +14,54 @@
   --muted: #78827b;
   --line: #e8e4da;
   --green: #547b68;
+  --pale: #e9eee7;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: Arial, "Noto Sans TC", sans-serif;
 }
-
 .wrap {
   max-width: 760px;
   margin: auto;
   padding: 28px 16px 48px;
 }
-
 .hero {
   padding: 30px 24px;
   border-radius: 22px;
-  background: #e9eee7;
+  background: var(--pale);
   margin-bottom: 18px;
 }
-
 .kicker {
   font-size: 12px;
   letter-spacing: .14em;
   color: var(--green);
   font-weight: bold;
 }
-
 h1 {
   font-size: 30px;
   line-height: 1.35;
   margin: 12px 0;
 }
-
 .hero p {
   color: #63716a;
   font-size: 14px;
   line-height: 1.8;
 }
-
-.panel, .section {
+.panel, .section, .member-card {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 19px;
   margin: 14px 0;
 }
-
-.progress-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.count {
-  font-size: 23px;
-  font-weight: bold;
-  color: var(--green);
-}
-
-.track {
-  height: 9px;
-  background: #ecebe4;
-  border-radius: 99px;
-  overflow: hidden;
-  margin: 13px 0 8px;
-}
-
-.bar {
-  height: 100%;
-  width: 0;
-  background: var(--green);
-  transition: width .2s;
-}
-
-.small {
-  font-size: 12px;
-  color: var(--muted);
-}
-
 .section h2 {
   font-size: 17px;
   margin: 0 0 14px;
 }
-
-.items {
-  display: grid;
-  gap: 4px;
-}
-
+.items { display: grid; gap: 4px; }
 .item {
   display: flex;
   gap: 12px;
@@ -117,11 +72,7 @@ h1 {
   font-size: 14px;
   cursor: pointer;
 }
-
-.item:hover {
-  background: #f7f7f1;
-}
-
+.item:hover { background: #f7f7f1; }
 .item input {
   width: 19px;
   height: 19px;
@@ -129,41 +80,72 @@ h1 {
   flex-shrink: 0;
   accent-color: var(--green);
 }
-
 .item.done span {
   text-decoration: line-through;
   color: #9aa29c;
 }
-
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.count {
+  font-size: 23px;
+  font-weight: bold;
+  color: var(--green);
+  white-space: nowrap;
+}
+.track {
+  height: 9px;
+  background: #ecebe4;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 13px 0 8px;
+}
+.bar {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  transition: width .2s;
+}
+.small {
+  font-size: 12px;
+  color: var(--muted);
+}
 .actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 15px;
 }
-
 button {
   border: 1px solid var(--line);
   background: white;
+  color: var(--ink);
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 11px 17px;
   cursor: pointer;
   font-size: 13px;
 }
-
-.primary {
+button:hover { background: #f5f5ef; }
+button.primary {
   background: var(--green);
   color: white;
   border-color: var(--green);
 }
-
+button.primary:hover { background: #456957; }
+button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
 .status {
   margin-top: 13px;
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  flex-wrap: wrap;
 }
-
 .dot {
   display: inline-block;
   width: 8px;
@@ -172,34 +154,73 @@ button {
   background: #c18b61;
   margin-right: 6px;
 }
-
-.dot.ok {
-  background: #4d9870;
-}
-
+.dot.ok { background: #4d9870; }
 .notice {
   font-size: 12px;
   line-height: 1.7;
   color: #68736c;
   margin-top: 12px;
 }
-
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.choice {
+  min-height: 112px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffefa;
+  padding: 20px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.choice strong { font-size: 20px; }
+.choice span { font-size: 12px; color: var(--muted); }
+.choice.overview {
+  grid-column: 1 / -1;
+  min-height: 76px;
+  background: var(--pale);
+}
+.member-card { margin: 12px 0; }
+.member-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.member-head strong { font-size: 17px; }
+.member-percent {
+  color: var(--green);
+  font-weight: bold;
+  font-size: 20px;
+}
+.view-title {
+  font-size: 21px;
+  margin: 0 0 8px;
+}
+.back-button { margin-bottom: 12px; }
+.hidden { display: none !important; }
 footer {
   text-align: center;
   color: var(--muted);
   font-size: 11px;
   padding: 25px 8px;
 }
-
 @media(max-width:500px) {
   h1 { font-size: 26px; }
   .hero { padding: 25px 20px; }
+  .choice-grid { grid-template-columns: 1fr 1fr; }
+  .panel, .section, .member-card { padding: 16px; }
 }
 </style>
 </head>
 
 <body>
-
 <main class="wrap">
 
 <header class="hero">
@@ -211,40 +232,95 @@ footer {
   </p>
 </header>
 
-<section class="panel">
+<!-- 身份選擇頁 -->
+<section id="homeView" class="panel">
+  <h2>👋 歡迎回來！</h2>
+  <p class="small">請選擇要查看或整理的清單</p>
 
-  <div class="progress-head">
-    <strong>打包完成進度</strong>
-    <span class="count" id="count">0 / 23</span>
+  <div class="choice-grid">
+    <button class="choice" data-member="parents">
+      <strong>👨‍👩‍👧‍👦 爸媽</strong>
+      <span>爸媽共用一份清單</span>
+    </button>
+
+    <button class="choice" data-member="kuei">
+      <strong>🙋 魁</strong>
+      <span>個人專屬清單</span>
+    </button>
+
+    <button class="choice" data-member="amy">
+      <strong>🌷 AMY</strong>
+      <span>個人專屬清單</span>
+    </button>
+
+    <button class="choice overview" id="openOverview">
+      <strong>📊 全家進度總覽</strong>
+      <span>查看三組人的打包進度（僅供查看）</span>
+    </button>
   </div>
-
-  <div class="track">
-    <div class="bar" id="bar"></div>
-  </div>
-
-  <div class="small" id="percent">0% 已完成</div>
 
   <div class="status">
     <span class="small">
-      <i class="dot" id="dot"></i>
-      <span id="sync">本機預覽模式</span>
+      <i class="dot" id="homeDot"></i>
+      <span id="homeSync">正在連線...</span>
     </span>
-    <span class="small" id="remaining">尚有 23 項</span>
   </div>
-
-  <div class="actions">
-    <button class="primary" id="share">分享清單網址</button>
-    <button id="reset">全部取消勾選</button>
-  </div>
-
-  <p class="notice">
-    啟用雲端同步後，所有家人開啟同一網址，
-    就能共同勾選並即時更新進度。
-  </p>
-
 </section>
 
-<div id="list"></div>
+<!-- 個人清單頁 -->
+<section id="checklistView" class="hidden">
+  <button class="back-button" id="backHome">← 返回身份選擇</button>
+
+  <div class="panel">
+    <div class="progress-head">
+      <strong id="memberTitle">打包完成進度</strong>
+      <span class="count" id="count">0 / 23</span>
+    </div>
+
+    <div class="track">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="small" id="percent">0% 已完成</div>
+
+    <div class="status">
+      <span class="small">
+        <i class="dot" id="dot"></i>
+        <span id="sync">正在連線...</span>
+      </span>
+      <span class="small" id="remaining">尚有 23 項</span>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="share">分享清單網址</button>
+      <button id="reset">重設這份清單</button>
+      <button id="toOverview">全家進度總覽</button>
+    </div>
+
+    <p class="notice">
+      目前只會修改這個身份的清單，不會影響其他家人的勾選紀錄。
+    </p>
+  </div>
+
+  <div id="list"></div>
+</section>
+
+<!-- 全家進度總覽 -->
+<section id="overviewView" class="hidden">
+  <button class="back-button" id="overviewBack">← 返回身份選擇</button>
+
+  <div class="panel">
+    <h2 class="view-title">📊 全家打包進度</h2>
+    <p class="small">以下內容僅供查看，不會修改任何人的清單。</p>
+    <div id="overviewCards"></div>
+    <div class="status">
+      <span class="small">
+        <i class="dot" id="overviewDot"></i>
+        <span id="overviewSync">正在連線...</span>
+      </span>
+    </div>
+  </div>
+</section>
 
 <footer>
   Family Trip Checklist · 祝旅途平安順心
@@ -257,7 +333,9 @@ footer {
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getDatabase, ref, onValue, set }
+import {
+  getDatabase, ref, onValue, update, set
+}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 import { getAuth, signInAnonymously }
@@ -265,112 +343,126 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 /* ==================================
    Firebase 設定
-   完成 Firebase 建立後再填入
 ================================== */
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyD_qvUbk3uSX5BaTLX6gkk9W3VdhFav6Pk",
+  authDomain: "family-trip-checklist-8f08c.firebaseapp.com",
+  databaseURL: "https://family-trip-checklist-8f08c-default-rtdb.firebaseio.com",
+  projectId: "family-trip-checklist-8f08c",
+  storageBucket: "family-trip-checklist-8f08c.firebasestorage.app",
+  messagingSenderId: "487257126970",
+  appId: "1:487257126970:web:847974307db6fa886f9d03"
 };
 
 /* ==================================
-   行李清單資料
+   行李清單資料：原本 23 個項目
 ================================== */
 
 const sections = [
-
 {
-title: "🧳 行李箱配置（共 1 大 4 小）",
-items: [
-"28 吋托運大箱（1 個）：裝載 4 人衣物、常備品與預留伴手禮空間。",
-"20 吋登機箱（4 個）：每人 1 個隨身箱；其中 1 個於 Day 3 傍晚前往芭東 Big C 採買時使用。",
-"隨身小包（每人 1 個）：收納護照證件與現金。"
-]
+  title: "🧳 行李箱配置（共 1 大 4 小）",
+  items: [
+    "28 吋托運大箱（1 個）：裝載 4 人衣物、常備品與預留伴手禮空間。",
+    "20 吋登機箱（4 個）：每人 1 個隨身箱；其中 1 個於 Day 3 傍晚前往芭東 Big C 採買時使用。",
+    "隨身小包（每人 1 個）：收納護照證件與現金。"
+  ]
 },
-
 {
-title: "🛂 隨身重要證件與票證（嚴禁托運）",
-items: [
-"護照正本 4 本（效期 6 個月以上）。",
-"台胞證正本 4 本（香港過境免簽聚餐）。",
-"新加坡電子入境卡（SGAC）憑證（出發前 3 天線上填報）。",
-"機票與活動電子憑證截圖（酷航、國泰、聖淘沙、ATV、泰拳 VIP）。"
-]
+  title: "🛂 隨身重要證件與票證（嚴禁托運）",
+  items: [
+    "護照正本 4 本（效期 6 個月以上）。",
+    "台胞證正本 4 本（香港過境免簽聚餐）。",
+    "新加坡電子入境卡（SGAC）憑證（出發前 3 天線上填報）。",
+    "機票與活動電子憑證截圖（酷航、國泰、聖淘沙、ATV、泰拳 VIP）。"
+  ]
 },
-
 {
-title: "💵 貨幣與支付工具",
-items: [
-"泰銖現鈔（THB 12,000–15,000）（小吃、夜市、按摩與小費）。",
-"新幣（SGD 100–200）＆港幣（HKD 500）現鈔。",
-"高海外回饋信用卡 2–3 張（已開通海外刷卡與 PIN 碼）。"
-]
+  title: "💵 貨幣與支付工具",
+  items: [
+    "泰銖現鈔（THB 12,000–15,000）（小吃、夜市、按摩與小費）。",
+    "新幣（SGD 100–200）＆港幣（HKD 500）現鈔。",
+    "高海外回饋信用卡 2–3 張（已開通海外刷卡與 PIN 碼）。"
+  ]
 },
-
 {
-title: "👕 服飾與鞋履裝備",
-items: [
-"透氣熱帶夏裝（每人 4–5 套）。",
-"泳具（度假村泳池與海灘戲水）。",
-"寺廟參拜長褲／過膝長裙（1 套）（大佛參拜遮肩過膝規範）。",
-"ATV 越野耐髒深色衣物＋包鞋／球鞋（1 套）（防泥水噴濺，嚴禁拖鞋）。",
-"匹克球運動服與運動鞋（1 套）（度假村球場活動）。",
-"薄外套／防風罩衫（每人 1 件）（機艙、室內冷氣與香港晚風）。"
-]
+  title: "👕 服飾與鞋履裝備",
+  items: [
+    "透氣熱帶夏裝（每人 4–5 套）。",
+    "泳具（度假村泳池與海灘戲水）。",
+    "寺廟參拜長褲／過膝長裙（1 套）（大佛參拜遮肩過膝規範）。",
+    "ATV 越野耐髒深色衣物＋包鞋／球鞋（1 套）（防泥水噴濺，嚴禁拖鞋）。",
+    "匹克球運動服與運動鞋（1 套）（度假村球場活動）。",
+    "薄外套／防風罩衫（每人 1 件）（機艙、室內冷氣與香港晚風）。"
+  ]
 },
-
 {
-title: "🧴 防曬、防蚊與常備藥品",
-items: [
-"海洋友善高係數防曬乳（SPF50+）。",
-"DEET 強效防蚊液（越野與夜市防蚊）。",
-"個人常備藥盒（腸胃藥、止痛退燒藥、暈車藥、OK 繃、個人藥品）。"
-]
+  title: "🧴 防曬、防蚊與常備藥品",
+  items: [
+    "海洋友善高係數防曬乳（SPF50+）。",
+    "DEET 強效防蚊液（越野與夜市防蚊）。",
+    "個人常備藥盒（腸胃藥、止痛退燒藥、暈車藥、OK 繃、個人藥品）。"
+  ]
 },
-
 {
-title: "🔌 3C 電子配件",
-items: [
-"萬用轉接插頭（英規三腳方扁頭）（新加坡與香港必備）。",
-"行動電源（容量 < 20,000mAh）（必須放隨身包，嚴禁托運）。",
-"手機充電器與充電線。",
-"泰國／新加坡雙國上網 eSIM 或漫遊。"
-]
+  title: "🔌 3C 電子配件",
+  items: [
+    "萬用轉接插頭（英規三腳方扁頭）（新加坡與香港必備）。",
+    "行動電源（容量 < 20,000mAh）（必須放隨身包，嚴禁托運）。",
+    "手機充電器與充電線。",
+    "泰國／新加坡雙國上網 eSIM 或漫遊。"
+  ]
 }
-
 ];
 
-/* ==================================
-   建立清單介面
-================================== */
+const members = {
+  parents: "爸媽",
+  kuei: "魁",
+  amy: "AMY"
+};
 
 const total = sections.reduce(
   (sum, section) => sum + section.items.length, 0
 );
 
+/* ==================================
+   畫面元素與資料狀態
+================================== */
+
+const homeView = document.getElementById("homeView");
+const checklistView = document.getElementById("checklistView");
+const overviewView = document.getElementById("overviewView");
 const list = document.getElementById("list");
 const boxes = [];
 
-sections.forEach(section => {
+let currentMember = null;
+let allValues = {
+  parents: {},
+  kuei: {},
+  amy: {}
+};
 
+let db = null;
+let membersRef = null;
+let cloudReady = false;
+let connectionMessage = "尚未連線";
+
+/* ==================================
+   建立清單介面
+================================== */
+
+sections.forEach(section => {
   const card = document.createElement("section");
   card.className = "section";
 
   const heading = document.createElement("h2");
   heading.textContent = section.title;
-
   card.appendChild(heading);
 
   const items = document.createElement("div");
   items.className = "items";
 
   section.items.forEach(item => {
-
     const label = document.createElement("label");
     label.className = "item";
 
@@ -380,206 +472,299 @@ sections.forEach(section => {
     const span = document.createElement("span");
     span.textContent = item;
 
-    const entry = { checkbox, label };
-    boxes.push(entry);
+    const index = boxes.length;
+    boxes.push({ checkbox, label });
 
     checkbox.addEventListener("change", () => {
-      updateItem(boxes.indexOf(entry), checkbox.checked);
+      updateItem(index, checkbox.checked);
     });
 
     label.append(checkbox, span);
     items.appendChild(label);
-
   });
 
   card.appendChild(items);
   list.appendChild(card);
-
 });
 
 /* ==================================
-   更新進度
+   進度計算
 ================================== */
 
-let values = {};
-
-function paint() {
-
-  let done = 0;
-
-  boxes.forEach((entry, index) => {
-
-    const checked = !!values[index];
-
-    entry.checkbox.checked = checked;
-    entry.label.classList.toggle("done", checked);
-
-    if (checked) done++;
-
-  });
-
-  document.getElementById("count").textContent =
-    `${done} / ${total}`;
-
-  document.getElementById("bar").style.width =
-    `${done / total * 100}%`;
-
-  document.getElementById("percent").textContent =
-    `${Math.round(done / total * 100)}% 已完成`;
-
-  document.getElementById("remaining").textContent =
-    `尚有 ${total - done} 項`;
-
-}
-
-/* ==================================
-   雲端同步
-================================== */
-
-let databaseRef = null;
-
-function setStatus(ok, message) {
-
-  document.getElementById("dot")
-    .classList.toggle("ok", ok);
-
-  document.getElementById("sync").textContent = message;
-
-}
-
-function updateItem(index, checked) {
-
-  values[index] = checked;
-  paint();
-
-  if (databaseRef) {
-
-    set(databaseRef, values).catch(() => {
-      setStatus(false, "同步失敗，請重新整理");
-    });
-
-  } else {
-
-    localStorage.setItem(
-      "family-trip-checklist",
-      JSON.stringify(values)
-    );
-
-  }
-
-}
-
-/* ==================================
-   初始化 Firebase
-================================== */
-
-const configured =
-  firebaseConfig.apiKey !== "YOUR_API_KEY" &&
-  firebaseConfig.projectId !== "YOUR_PROJECT_ID" &&
-  firebaseConfig.databaseURL !== "YOUR_DATABASE_URL";
-
-if (configured) {
-
-  try {
-
-    const app = initializeApp(firebaseConfig);
-
-    const auth = getAuth(app);
-    const db = getDatabase(app);
-
-    databaseRef = ref(
-      db,
-      "family-trip-checklist/shared-items"
-    );
-
-    signInAnonymously(auth)
-      .then(() => {
-
-        onValue(databaseRef, snapshot => {
-
-          values = snapshot.val() || {};
-          paint();
-
-          setStatus(true, "已連線・多人即時同步");
-
-        }, () => {
-
-          setStatus(false, "雲端連線失敗");
-
-        });
-
-      })
-      .catch(() => {
-
-        setStatus(false, "登入失敗，請檢查 Firebase 設定");
-
-      });
-
-  } catch (error) {
-
-    setStatus(false, "Firebase 設定有誤");
-
-  }
-
-} else {
-
-  values = JSON.parse(
-    localStorage.getItem("family-trip-checklist") || "{}"
+function getProgress(data) {
+  const done = boxes.reduce(
+    (sum, entry, index) => sum + (data[index] ? 1 : 0),
+    0
   );
 
-  paint();
+  return {
+    done,
+    remaining: total - done,
+    percent: Math.round(done / total * 100)
+  };
+}
 
-  setStatus(false, "本機模式・尚未啟用多人同步");
+function paintChecklist() {
+  if (!currentMember) return;
 
+  const values = allValues[currentMember] || {};
+  const progress = getProgress(values);
+
+  boxes.forEach((entry, index) => {
+    const checked = !!values[index];
+    entry.checkbox.checked = checked;
+    entry.checkbox.disabled = !cloudReady;
+    entry.label.classList.toggle("done", checked);
+  });
+
+  document.getElementById("memberTitle").textContent =
+    `${members[currentMember]}的打包進度`;
+
+  document.getElementById("count").textContent =
+    `${progress.done} / ${total}`;
+
+  document.getElementById("bar").style.width =
+    `${progress.percent}%`;
+
+  document.getElementById("percent").textContent =
+    `${progress.percent}% 已完成`;
+
+  document.getElementById("remaining").textContent =
+    `尚有 ${progress.remaining} 項`;
+
+  document.getElementById("reset").disabled = !cloudReady;
+}
+
+function paintOverview() {
+  const container = document.getElementById("overviewCards");
+  container.innerHTML = "";
+
+  Object.keys(members).forEach(key => {
+    const progress = getProgress(allValues[key] || {});
+
+    const card = document.createElement("div");
+    card.className = "member-card";
+
+    const head = document.createElement("div");
+    head.className = "member-head";
+
+    const name = document.createElement("strong");
+    name.textContent = members[key];
+
+    const percent = document.createElement("span");
+    percent.className = "member-percent";
+    percent.textContent = `${progress.percent}%`;
+
+    head.append(name, percent);
+
+    const track = document.createElement("div");
+    track.className = "track";
+
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.style.width = `${progress.percent}%`;
+    track.appendChild(bar);
+
+    const detail = document.createElement("div");
+    detail.className = "small";
+    detail.textContent =
+      `已完成 ${progress.done} / ${total} 項・尚有 ${progress.remaining} 項`;
+
+    card.append(head, track, detail);
+    container.appendChild(card);
+  });
 }
 
 /* ==================================
-   全部重設
+   狀態顯示
+================================== */
+
+function setStatus(ok, message) {
+  connectionMessage = message;
+
+  ["dot", "homeDot", "overviewDot"].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.classList.toggle("ok", ok);
+  });
+
+  ["sync", "homeSync", "overviewSync"].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = message;
+  });
+}
+
+/* ==================================
+   畫面切換
+================================== */
+
+function showHome() {
+  currentMember = null;
+  homeView.classList.remove("hidden");
+  checklistView.classList.add("hidden");
+  overviewView.classList.add("hidden");
+}
+
+function showChecklist(member) {
+  currentMember = member;
+  homeView.classList.add("hidden");
+  checklistView.classList.remove("hidden");
+  overviewView.classList.add("hidden");
+  paintChecklist();
+}
+
+function showOverview() {
+  homeView.classList.add("hidden");
+  checklistView.classList.add("hidden");
+  overviewView.classList.remove("hidden");
+  paintOverview();
+}
+
+/* ==================================
+   身份選擇
+================================== */
+
+document.querySelectorAll("[data-member]").forEach(button => {
+  button.addEventListener("click", () => {
+    showChecklist(button.dataset.member);
+  });
+});
+
+document.getElementById("openOverview")
+  .addEventListener("click", showOverview);
+
+document.getElementById("backHome")
+  .addEventListener("click", showHome);
+
+document.getElementById("overviewBack")
+  .addEventListener("click", showHome);
+
+document.getElementById("toOverview")
+  .addEventListener("click", showOverview);
+
+/* ==================================
+   修改個人清單
+================================== */
+
+async function updateItem(index, checked) {
+  if (!currentMember || !cloudReady || !membersRef) {
+    paintChecklist();
+    return;
+  }
+
+  const member = currentMember;
+  const memberRef = ref(
+    db,
+    `family-trip-checklist/members/${member}`
+  );
+
+  try {
+    await update(memberRef, {
+      [index]: checked
+    });
+  } catch (error) {
+    setStatus(false, "雲端同步失敗，請重新整理");
+    paintChecklist();
+  }
+}
+
+/* ==================================
+   重設目前身份的清單
 ================================== */
 
 document.getElementById("reset")
-.addEventListener("click", () => {
+  .addEventListener("click", async () => {
+    if (!currentMember || !cloudReady) return;
 
-  if (confirm("確定取消所有勾選？這會影響所有使用者。")) {
+    const memberName = members[currentMember];
 
-    values = {};
-    paint();
+    if (!confirm(
+      `確定要重設「${memberName}」的清單嗎？\n\n只會清除這份清單，不影響其他家人。`
+    )) return;
 
-    if (databaseRef) {
-      set(databaseRef, values);
-    } else {
-      localStorage.setItem(
-        "family-trip-checklist",
-        JSON.stringify(values)
-      );
+    const memberRef = ref(
+      db,
+      `family-trip-checklist/members/${currentMember}`
+    );
+
+    try {
+      await set(memberRef, {});
+    } catch (error) {
+      alert("重設失敗，請確認網路連線後再試一次。");
     }
-
-  }
-
-});
+  });
 
 /* ==================================
    分享網址
 ================================== */
 
 document.getElementById("share")
-.addEventListener("click", async () => {
+  .addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      alert("清單網址已複製，可以傳給家人了！");
+    } catch {
+      prompt("複製網址分享給家人：", location.href);
+    }
+  });
 
+/* ==================================
+   Firebase 雲端同步
+================================== */
+
+async function initializeCloud() {
   try {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    db = getDatabase(app);
 
-    await navigator.clipboard.writeText(location.href);
+    await signInAnonymously(auth);
 
-    alert("清單網址已複製，可以傳給家人了！");
+    membersRef = ref(
+      db,
+      "family-trip-checklist/members"
+    );
 
-  } catch {
+    onValue(
+      membersRef,
+      snapshot => {
+        const raw = snapshot.val() || {};
 
-    prompt("複製網址分享給家人：", location.href);
+        allValues = {
+          parents: raw.parents || {},
+          kuei: raw.kuei || {},
+          amy: raw.amy || {}
+        };
 
+        cloudReady = true;
+        setStatus(true, "已連線・三份清單即時同步");
+
+        if (currentMember) paintChecklist();
+        if (!overviewView.classList.contains("hidden")) {
+          paintOverview();
+        }
+      },
+      error => {
+        cloudReady = false;
+        setStatus(false, "雲端讀取失敗，請檢查 Firebase Rules");
+        paintChecklist();
+      }
+    );
+
+  } catch (error) {
+    cloudReady = false;
+    setStatus(false, "Firebase 登入失敗，請檢查設定");
+    paintChecklist();
   }
+}
 
-});
+/* ==================================
+   啟動
+================================== */
+
+showHome();
+setStatus(false, "正在連線 Firebase...");
+initializeCloud();
 
 </script>
-
 </body>
 </html>
