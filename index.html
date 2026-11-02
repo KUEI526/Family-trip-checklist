@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Trip Checklist｜家族旅行打包清單</title>
+
+<style>
+:root {
+  --bg: #f7f4ee;
+  --card: #fffefa;
+  --ink: #28332f;
+  --muted: #78827b;
+  --line: #e8e4da;
+  --green: #547b68;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Arial, "Noto Sans TC", sans-serif;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: auto;
+  padding: 28px 16px 48px;
+}
+
+.hero {
+  padding: 30px 24px;
+  border-radius: 22px;
+  background: #e9eee7;
+  margin-bottom: 18px;
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: var(--green);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 1.35;
+  margin: 12px 0;
+}
+
+.hero p {
+  color: #63716a;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.panel, .section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 19px;
+  margin: 14px 0;
+}
+
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.count {
+  font-size: 23px;
+  font-weight: bold;
+  color: var(--green);
+}
+
+.track {
+  height: 9px;
+  background: #ecebe4;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 13px 0 8px;
+}
+
+.bar {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  transition: width .2s;
+}
+
+.small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.section h2 {
+  font-size: 17px;
+  margin: 0 0 14px;
+}
+
+.items {
+  display: grid;
+  gap: 4px;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 8px;
+  border-radius: 10px;
+  line-height: 1.65;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: #f7f7f1;
+}
+
+.item input {
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--green);
+}
+
+.item.done span {
+  text-decoration: line-through;
+  color: #9aa29c;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+button {
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.primary {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.status {
+  margin-top: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c18b61;
+  margin-right: 6px;
+}
+
+.dot.ok {
+  background: #4d9870;
+}
+
+.notice {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #68736c;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 25px 8px;
+}
+
+@media(max-width:500px) {
+  h1 { font-size: 26px; }
+  .hero { padding: 25px 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+<header class="hero">
+  <div class="kicker">FAMILY TRIP · PACKING LIST</div>
+  <h1>家族旅行<br>行李打包清單</h1>
+  <p>
+    從城市到海島，沿途都是風景。<br>
+    一起確認、一起打包，讓旅程準備更從容。
+  </p>
+</header>
+
+<section class="panel">
+
+  <div class="progress-head">
+    <strong>打包完成進度</strong>
+    <span class="count" id="count">0 / 23</span>
+  </div>
+
+  <div class="track">
+    <div class="bar" id="bar"></div>
+  </div>
+
+  <div class="small" id="percent">0% 已完成</div>
+
+  <div class="status">
+    <span class="small">
+      <i class="dot" id="dot"></i>
+      <span id="sync">本機預覽模式</span>
+    </span>
+    <span class="small" id="remaining">尚有 23 項</span>
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="share">分享清單網址</button>
+    <button id="reset">全部取消勾選</button>
+  </div>
+
+  <p class="notice">
+    啟用雲端同步後，所有家人開啟同一網址，
+    就能共同勾選並即時更新進度。
+  </p>
+
+</section>
+
+<div id="list"></div>
+
+<footer>
+  Family Trip Checklist · 祝旅途平安順心
+</footer>
+
+</main>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getDatabase, ref, onValue, set }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import { getAuth, signInAnonymously }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* ==================================
+   Firebase 設定
+   完成 Firebase 建立後再填入
+================================== */
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://YOUR_DATABASE_URL",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+/* ==================================
+   行李清單資料
+================================== */
+
+const sections = [
+
+{
+title: "🧳 行李箱配置（共 1 大 4 小）",
+items: [
+"28 吋托運大箱（1 個）：裝載 4 人衣物、常備品與預留伴手禮空間。",
+"20 吋登機箱（4 個）：每人 1 個隨身箱；其中 1 個於 Day 3 傍晚前往芭東 Big C 採買時使用。",
+"隨身小包（每人 1 個）：收納護照證件與現金。"
+]
+},
+
+{
+title: "🛂 隨身重要證件與票證（嚴禁托運）",
+items: [
+"護照正本 4 本（效期 6 個月以上）。",
+"台胞證正本 4 本（香港過境免簽聚餐）。",
+"新加坡電子入境卡（SGAC）憑證（出發前 3 天線上填報）。",
+"機票與活動電子憑證截圖（酷航、國泰、聖淘沙、ATV、泰拳 VIP）。"
+]
+},
+
+{
+title: "💵 貨幣與支付工具",
+items: [
+"泰銖現鈔（THB 12,000–15,000）（小吃、夜市、按摩與小費）。",
+"新幣（SGD 100–200）＆港幣（HKD 500）現鈔。",
+"高海外回饋信用卡 2–3 張（已開通海外刷卡與 PIN 碼）。"
+]
+},
+
+{
+title: "👕 服飾與鞋履裝備",
+items: [
+"透氣熱帶夏裝（每人 4–5 套）。",
+"泳具（度假村泳池與海灘戲水）。",
+"寺廟參拜長褲／過膝長裙（1 套）（大佛參拜遮肩過膝規範）。",
+"ATV 越野耐髒深色衣物＋包鞋／球鞋（1 套）（防泥水噴濺，嚴禁拖鞋）。",
+"匹克球運動服與運動鞋（1 套）（度假村球場活動）。",
+"薄外套／防風罩衫（每人 1 件）（機艙、室內冷氣與香港晚風）。"
+]
+},
+
+{
+title: "🧴 防曬、防蚊與常備藥品",
+items: [
+"海洋友善高係數防曬乳（SPF50+）。",
+"DEET 強效防蚊液（越野與夜市防蚊）。",
+"個人常備藥盒（腸胃藥、止痛退燒藥、暈車藥、OK 繃、個人藥品）。"
+]
+},
+
+{
+title: "🔌 3C 電子配件",
+items: [
+"萬用轉接插頭（英規三腳方扁頭）（新加坡與香港必備）。",
+"行動電源（容量 < 20,000mAh）（必須放隨身包，嚴禁托運）。",
+"手機充電器與充電線。",
+"泰國／新加坡雙國上網 eSIM 或漫遊。"
+]
+}
+
+];
+
+/* ==================================
+   建立清單介面
+================================== */
+
+const total = sections.reduce(
+  (sum, section) => sum + section.items.length, 0
+);
+
+const list = document.getElementById("list");
+const boxes = [];
+
+sections.forEach(section => {
+
+  const card = document.createElement("section");
+  card.className = "section";
+
+  const heading = document.createElement("h2");
+  heading.textContent = section.title;
+
+  card.appendChild(heading);
+
+  const items = document.createElement("div");
+  items.className = "items";
+
+  section.items.forEach(item => {
+
+    const label = document.createElement("label");
+    label.className = "item";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    const span = document.createElement("span");
+    span.textContent = item;
+
+    const entry = { checkbox, label };
+    boxes.push(entry);
+
+    checkbox.addEventListener("change", () => {
+      updateItem(boxes.indexOf(entry), checkbox.checked);
+    });
+
+    label.append(checkbox, span);
+    items.appendChild(label);
+
+  });
+
+  card.appendChild(items);
+  list.appendChild(card);
+
+});
+
+/* ==================================
+   更新進度
+================================== */
+
+let values = {};
+
+function paint() {
+
+  let done = 0;
+
+  boxes.forEach((entry, index) => {
+
+    const checked = !!values[index];
+
+    entry.checkbox.checked = checked;
+    entry.label.classList.toggle("done", checked);
+
+    if (checked) done++;
+
+  });
+
+  document.getElementById("count").textContent =
+    `${done} / ${total}`;
+
+  document.getElementById("bar").style.width =
+    `${done / total * 100}%`;
+
+  document.getElementById("percent").textContent =
+    `${Math.round(done / total * 100)}% 已完成`;
+
+  document.getElementById("remaining").textContent =
+    `尚有 ${total - done} 項`;
+
+}
+
+/* ==================================
+   雲端同步
+================================== */
+
+let databaseRef = null;
+
+function setStatus(ok, message) {
+
+  document.getElementById("dot")
+    .classList.toggle("ok", ok);
+
+  document.getElementById("sync").textContent = message;
+
+}
+
+function updateItem(index, checked) {
+
+  values[index] = checked;
+  paint();
+
+  if (databaseRef) {
+
+    set(databaseRef, values).catch(() => {
+      setStatus(false, "同步失敗，請重新整理");
+    });
+
+  } else {
+
+    localStorage.setItem(
+      "family-trip-checklist",
+      JSON.stringify(values)
+    );
+
+  }
+
+}
+
+/* ==================================
+   初始化 Firebase
+================================== */
+
+const configured =
+  firebaseConfig.apiKey !== "YOUR_API_KEY" &&
+  firebaseConfig.projectId !== "YOUR_PROJECT_ID" &&
+  firebaseConfig.databaseURL !== "YOUR_DATABASE_URL";
+
+if (configured) {
+
+  try {
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    databaseRef = ref(
+      db,
+      "family-trip-checklist/shared-items"
+    );
+
+    signInAnonymously(auth)
+      .then(() => {
+
+        onValue(databaseRef, snapshot => {
+
+          values = snapshot.val() || {};
+          paint();
+
+          setStatus(true, "已連線・多人即時同步");
+
+        }, () => {
+
+          setStatus(false, "雲端連線失敗");
+
+        });
+
+      })
+      .catch(() => {
+
+        setStatus(false, "登入失敗，請檢查 Firebase 設定");
+
+      });
+
+  } catch (error) {
+
+    setStatus(false, "Firebase 設定有誤");
+
+  }
+
+} else {
+
+  values = JSON.parse(
+    localStorage.getItem("family-trip-checklist") || "{}"
+  );
+
+  paint();
+
+  setStatus(false, "本機模式・尚未啟用多人同步");
+
+}
+
+/* ==================================
+   全部重設
+================================== */
+
+document.getElementById("reset")
+.addEventListener("click", () => {
+
+  if (confirm("確定取消所有勾選？這會影響所有使用者。")) {
+
+    values = {};
+    paint();
+
+    if (databaseRef) {
+      set(databaseRef, values);
+    } else {
+      localStorage.setItem(
+        "family-trip-checklist",
+        JSON.stringify(values)
+      );
+    }
+
+  }
+
+});
+
+/* ==================================
+   分享網址
+================================== */
+
+document.getElementById("share")
+.addEventListener("click", async () => {
+
+  try {
+
+    await navigator.clipboard.writeText(location.href);
+
+    alert("清單網址已複製，可以傳給家人了！");
+
+  } catch {
+
+    prompt("複製網址分享給家人：", location.href);
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
